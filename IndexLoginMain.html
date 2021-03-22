@@ -182,9 +182,6 @@
                 var tdName = document.createElement("td");
                 var tdPrice = document.createElement("td");
                 var tdPhoto = document.createElement("td");
-
-
-
                 tdName.innerHTML = item.Name;
                 tdPrice.innerHTML = item.Price;
                 var img = document.createElement("img");
@@ -192,15 +189,9 @@
                 img.height = "100";
                 img.width = "100";
                 tdPhoto.appendChild(img);
-
-
-
-
                 tr.appendChild(tdName);
                 tr.appendChild(tdPrice);
                 tr.appendChild(tdPhoto);
-
-
                 tbody.appendChild(tr);
 
             }
@@ -243,9 +234,7 @@
                                     <label>FirstName</label>
                                     <input type="text" class="form-control" placeholder="First name"
                                         style="border-radius: 40px; height: 40px; width:350px;" required autofocus>
-                                </div>
-                                <div class="col">
-                                    <label>LastName</label>
+                                                                  <label>LastName</label>
                                     <input type="text" class="form-control" placeholder="Last name"
                                         style="border-radius: 40px; height: 40px; width:350px;" required autofocus>
                                 </div>
