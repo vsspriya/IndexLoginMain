@@ -1,0 +1,373 @@
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../Fonts/css/all.css">
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            /* height: 100vh; */
+            font-size: 18px;
+            background-color: rgb(240, 235, 235);
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .sidebar {
+           
+            background:#e9e1e9;
+            float: left;
+            width: 250px;
+            text-align: center;
+            /* box-shadow: 0 5px 10px black; */
+            height: 100vh;
+            padding: 10px;
+            margin:0;
+            padding:0;
+
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            display: block;
+           color:black;
+            padding: 14px 25px;
+
+        }
+
+        .sidebar a:hover {
+
+            background: linear-gradient(45deg, pink, rgb(228, 94, 94));
+            border-radius: 50px;
+            box-shadow: 0 0 5px black;
+
+        }
+
+        .sidebar img {
+
+            width: 150px;
+            height: 150px;
+            border: 1 px solid blue;
+            border-radius: 50%;
+            background-color: blue;
+            /* box-shadow: 0 5px 10 #8989bb; */
+            margin-bottom: 20px;
+        }
+
+        .box {
+            height: 225px;
+            width: auto;
+            border-radius: 30px;
+            /* border: 1px solid gray; */
+
+            background: linear-gradient(45deg, #caccd1, #f3f4f7
+);
+            /* box-shadow: 0 5px 10px #89d4cf; */
+            padding: 40px;
+            margin-right: 70px;
+            margin-top:25px;
+        }
+
+        .box1 {
+            height: 400px;
+            width: 500px;
+            border-radius: 30px;
+            /* border: 1px solid gray; */
+
+            background: linear-gradient(45deg, #caccd1, #f3f4f7
+);
+            /* box-shadow: 0 5px 10px #89d4cf; */
+            padding: 30px;
+            margin-right: 70px;
+        }
+    </style>
+    <script>
+        var categories = ["Select ", "Cold", "Multivitamin"];
+        // var fever = ["Select Fever", "DOlo650","paractamal"];
+        var cold = ["Select cold", "Sinarest"];
+        var Multivitamin = ["Select Multivitamin", "Zincovit"];
+        // var Throatpain = ["Select Throatpain", "Azitromysin"];
+
+        var data = [
+            { Name: "Dolo650", Price: 45.55, Photo: '../image/dolo.jpg' },
+            { Name: "Sinarest", Price: 35.55, Photo: '../image/sinarest.jpg' },
+            { Name: "Zincovit", Price: 150.55, Photo: '../image/zincovit.jpg' },
+            { Name: "Azitromysin", Price: 55.55, Photo: '../image/azi.jpg' },
+
+        ];
+
+        function bodyload() {
+            GetCartCount();
+            var lstCategories = document.getElementById("lstCategories");
+            for (var item of categories) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                lstCategories.appendChild(option);
+            }
+        }
+
+        var products = [];
+        function LoadProducts() {
+            var lstProducts = document.getElementById("lstProducts");
+            lstProducts.innerHTML = "";
+            for (var item of products) {
+                var option = document.createElement("option");
+                option.text = item;
+                option.value = item;
+                lstProducts.appendChild(option);
+            }
+        }
+
+        function SelectedCategoryChanged() {
+            var categoryName = document.getElementById("lstCategories").value;
+            switch (categoryName) {
+                case "Fever":
+                    products = fever;
+                    LoadProducts();
+                    break;
+                case "Cold":
+                    products = cold;
+                    LoadProducts();
+                    break;
+                case "Multivitamin":
+                    products = Multivitamin;
+                    LoadProducts();
+                    break;
+                case "ThroatPain":
+                    products = ThroatPain;
+                    LoadProducts();
+                    break;
+                default:
+                    products = ["Select"];
+                    LoadProducts();
+                    break;
+            }
+        }
+        var searchedProduct;
+        function SelectedProductChanged() {
+            var productName = document.getElementById("lstProducts").value;
+            searchedProduct = data.find(function (item) {
+                return item.Name == productName;
+            })
+            document.getElementById("prodName").innerHTML = searchedProduct.Name;
+            document.getElementById("prodPrice").innerHTML = "&#8377;" + searchedProduct.Price;
+            document.getElementById("prodPhoto").src = searchedProduct.Photo;
+
+        }
+        var cartItems = [];
+        function GetCartCount() {
+            document.getElementById("cartCount").innerHTML = cartItems.length;
+        }
+        function AddtoCartClick() {
+            cartItems.push(searchedProduct);
+            GetCartCount();
+            alert("Item Added to Cart");
+        }
+        function AddCartItemsToTable() {
+            var tbody = document.getElementById("tbody");
+            tbody.innerHTML = "";
+            for (var item of cartItems) {
+                var tr = document.createElement("tr");
+                var tdName = document.createElement("td");
+                var tdPrice = document.createElement("td");
+                var tdPhoto = document.createElement("td");
+
+
+
+                tdName.innerHTML = item.Name;
+                tdPrice.innerHTML = item.Price;
+                var img = document.createElement("img");
+                img.src = item.Photo;
+                img.height = "100";
+                img.width = "100";
+                tdPhoto.appendChild(img);
+
+
+
+
+                tr.appendChild(tdName);
+                tr.appendChild(tdPrice);
+                tr.appendChild(tdPhoto);
+
+
+                tbody.appendChild(tr);
+
+            }
+        }
+    </script>
+</head>
+
+<body onload="bodyload()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-sm-12 col-md-4">
+                <aside class="sidebar">
+                    <img src="../image/mylan.png">
+                    <a href="#">Personal Info</a>
+                    <a href="#">About</a>
+                    <a href="#">DashBoards</a>
+                    <a href="#">Contact Us</a>
+
+                </aside>
+
+            </div>
+
+
+            <div class="col-sm-12 col-md-8">
+                <!-- <div class="row">
+                    <form style="margin-top:40px;display: inline-flex;margin-left: 620px;">
+                        <div class="input-group ">
+                            <input type="text" class="form-control" placeholder="serach.."
+                                style="height: 40px;width: 200px;border-radius: 20px;"> &nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-info" style="border-radius: 50px;">Submit</button>
+                        </div>
+                    </form>
+                </div> -->
+                <div class="row">
+
+                    <div class="col-10 box">
+                        <form>
+                            <div class="row">
+                                <div class="col">
+                                    <label>FirstName</label>
+                                    <input type="text" class="form-control" placeholder="First name"
+                                        style="border-radius: 40px; height: 40px; width:350px;" required autofocus>
+                                </div>
+                                <div class="col">
+                                    <label>LastName</label>
+                                    <input type="text" class="form-control" placeholder="Last name"
+                                        style="border-radius: 40px; height: 40px; width:350px;" required autofocus>
+                                </div>
+                            </div>
+                            <br><br>
+
+                            <div class="form-row">
+                                <label>Age</label> &nbsp; &nbsp;
+                                <input type="text" class="form-control"
+                                    style="border-radius: 40px; height: 30px; width:100px;" placeholder="Age"> &nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+                                <div class="form-check-inline">
+
+                                    <label class="form-check-label" required> Gender &nbsp;
+
+                                        <input type="radio" id="male" name="gender" value="male">
+                                        <label for="male">Male</label>
+                                        <input type="radio" id="female" name="gender" value="female">
+                                        <label for="female">Female</label>
+                                    </label>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-10 mt-5 box1">
+                        <!-- <header class="text-center bg-danger text-white p-2">
+                            <h1>Searching</h1>
+                        </header> -->
+                        <section class="mt-2">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Select Category</label>
+                                        <div>
+                                            <select onchange="SelectedCategoryChanged()" id="lstCategories"
+                                                class="form-control">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Product</label>
+                                        <div>
+                                            <select onchange="SelectedProductChanged()" id="lstProducts"
+                                                class="form-control">
+
+                                            </select>
+                                        </div>
+                                        &nbsp;&nbsp;
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Preview</label>
+                                        <div class="card">
+                                            <div class="card-header text-center" >
+                                                <h3 id="prodName"></h3>
+                                            </div>
+                                            <div class="card-body text-center" >
+                                                <img id="prodPhoto" width="150" height="130">
+
+                                                <h3 id="prodPrice"></h3>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <h3></h3>
+                                                <button onclick="AddtoCartClick()" class="btn btn-danger btn-block">
+                                                    <span class="fa fa-shopping-cart"></span>
+                                                    Add to Cart
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-4 ">
+                                    <label>View Items</label>
+                                    <button onclick="AddCartItemsToTable()" data-toggle="modal"
+                                        data-target="#cartSummary" class="btn btn-danger btn-block"
+                                        style="height: 35px;width:200px;" style="height: 35px;width:200px;">
+                                        <span class="fa fa-shopping-basket"></span>
+                                        [<span id="cartCount"></span>] Your Cart Items
+                                    </button>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal fade" id="cartSummary">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h2>Cart Summary</h2>
+                                    <button data-dismiss="modal" class="close">x</button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Photo</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-info">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
